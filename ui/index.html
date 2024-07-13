@@ -51,7 +51,12 @@
 </head>
 
 <body>
+    <div id="history">
+
+    </div>
+
     <div class="chat-container">
+
         <div id="chat" class="message">
             <!-- Message from the backend will be displayed here -->
         </div>
@@ -62,7 +67,7 @@
     </div>
 
     <script>
-        const chosenScenarios = [];
+        let chosenScenarios = [];
         document.addEventListener("DOMContentLoaded", function () {
             // Simulate fetching a message from the backend
             const message = "You wake up in a mysterious room. What do you do?";
@@ -70,18 +75,23 @@
         });
 
         function handleChoice(choice) {
+            var toAdd = document.createDocumentFragment();
 
-            chosenScenarios.push[document.getElementById("chat").innerText]
+            chosenScenarios.push(document.getElementById("chat").innerText);
+            var newDiv = document.createElement('div');
+            newDiv.id = 'r';
+            newDiv.className = 'chat-container';
+            newDiv.textContent = document.getElementById("chat").innerText
+            toAdd.appendChild(newDiv);
+            document.getElementById('history').appendChild(toAdd);
             fetch('http://localhost:3000/api/scenario',
-            {
-  method: "POST",
-  body: { chosenScenarios: chosenScenarios, playerChoice: choice }
-  // ...
-})
+                {
+                    method: "POST",
+                    body: { chosenScenarios: chosenScenarios, playerChoice: choice }
+                })
                 .then((res) => {
                     return res.json()
                 }).then((data) => {
-                    console.log(data)
                     document.getElementById("chat").innerText =
                         (data.message);
                     document.getElementById("option1").innerText =
@@ -90,22 +100,6 @@
                         (data.option2);
                 })
                 .catch((err) => console.debug(err));
-
-
-            // var xhr = new XMLHttpRequest();
-            // xhr.onload = (res) => {
-            //     if (res.target.status == 200) {
-            //         document.getElementById("chat").innerText =
-            //             (res.target.message);
-            //         document.getElementById("option1").innerText =
-            //             (res.target.option1);
-            //         document.getElementById("option2").innerText =
-            //             (res.target.option2);
-
-            //     }
-            // }
-            // xhr.open("GET", "localhost:3000/api/scenario", { chosenScenarios: chosenScenarios, playerChoice: choice });
-            // xhr.send();
         }
     </script>
 </body>
