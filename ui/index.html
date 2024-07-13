@@ -79,14 +79,15 @@
   // ...
 })
                 .then((res) => {
-                    return res.text()
+                    return res.json()
                 }).then((data) => {
+                    console.log(data)
                     document.getElementById("chat").innerText =
-                        (res.target.message);
+                        (data.message);
                     document.getElementById("option1").innerText =
-                        (res.target.option1);
+                        (data.option1);
                     document.getElementById("option2").innerText =
-                        (res.target.option2);
+                        (data.option2);
                 })
                 .catch((err) => console.debug(err));
 
