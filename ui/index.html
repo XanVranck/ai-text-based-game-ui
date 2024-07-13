@@ -47,27 +47,39 @@
         .choice-button:hover {
             background-color: #3700b3;
         }
+
+        .container {
+            flex-direction: column;
+        }
+
+        .history {
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <div id="history">
+    <div class="container">
+        <div id="history" class="history">
 
-    </div>
-
-    <div class="chat-container">
-
-        <div id="chat" class="message">
-            <!-- Message from the backend will be displayed here -->
         </div>
-        <div class="choices">
-            <button class="choice-button" id="option1" onclick="handleChoice('Choice 1')">Look around</button>
-            <button class="choice-button" id="option2" onclick="handleChoice('Choice 2')">Open the door</button>
+
+        <div class="chat-container">
+
+            <div id="chat" class="message">
+                <!-- Message from the backend will be displayed here -->
+            </div>
+            <div class="choices">
+                <button class="choice-button" id="option1" onclick="handleChoice('Choice 1')">Look around</button>
+                <button class="choice-button" id="option2" onclick="handleChoice('Choice 2')">Open the door</button>
+            </div>
         </div>
     </div>
 
     <script>
         let chosenScenarios = [];
+        let count = 0;
         document.addEventListener("DOMContentLoaded", function () {
             // Simulate fetching a message from the backend
             const message = "You wake up in a mysterious room. What do you do?";
@@ -76,10 +88,16 @@
 
         function handleChoice(choice) {
             var toAdd = document.createDocumentFragment();
-
+            count++;
+            if (count == 6) {
+                count = 1;
+            }
+            if (document.contains(document.getElementById(count))) {
+                document.getElementById(count).remove();
+            }
             chosenScenarios.push(document.getElementById("chat").innerText);
             var newDiv = document.createElement('div');
-            newDiv.id = 'r';
+            newDiv.id = count;
             newDiv.className = 'chat-container';
             newDiv.textContent = document.getElementById("chat").innerText
             toAdd.appendChild(newDiv);
