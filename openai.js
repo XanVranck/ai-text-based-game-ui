@@ -12,6 +12,8 @@ const callOpenAI = async function (scenarios, choice, turn) {
         + ". Make sure the response is a correct JSON"
         + ". You can choose when and how to make an ending scenario"
         + ". If it is the last scenario, you should change {continue: false} in the json response.";
+        console.log(prompt);
+        console.log('--------------------------------');
     const stream = await openai.beta.chat.completions.stream({
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt }],

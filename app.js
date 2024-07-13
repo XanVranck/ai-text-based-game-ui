@@ -7,7 +7,10 @@ app.use(cors())
 
 app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.post('/api/scenario', (req, res) => {
+    console.log('req', req)
+    console.log('req.body', req.body)
     callOpenAI(req.body.chosenScenarios, req.body.playerChoice, 0)
     .then((nextScenario) => {
         res.status(200).json(nextScenario);

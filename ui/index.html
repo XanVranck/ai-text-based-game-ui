@@ -102,10 +102,14 @@
             newDiv.textContent = document.getElementById("chat").innerText
             toAdd.appendChild(newDiv);
             document.getElementById('history').appendChild(toAdd);
+
+            const myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
             fetch('http://localhost:3000/api/scenario',
                 {
+                    headers: myHeaders,
                     method: "POST",
-                    body: { chosenScenarios: chosenScenarios, playerChoice: choice }
+                    body: JSON.stringify({ chosenScenarios: chosenScenarios, playerChoice: choice == 'option1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText   })
                 })
                 .then((res) => {
                     return res.json()
