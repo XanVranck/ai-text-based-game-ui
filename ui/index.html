@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .chat-container {
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 400px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            margin-bottom: 20px;
+        }
+
+        .choices {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .choice-button {
+            background-color: #6200ea;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .choice-button:hover {
+            background-color: #3700b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div id="chat" class="message">
+            <!-- Message from the backend will be displayed here -->
+        </div>
+        <div class="choices">
+            <button class="choice-button" id="option1" onclick="handleChoice('Choice 1')">Look around</button>
+            <button class="choice-button" id="option2" onclick="handleChoice('Choice 2')">Open the door</button>
+        </div>
+    </div>
+
+    <script>
+        const chosenScenarios = [];
+        document.addEventListener("DOMContentLoaded", function () {
+            // Simulate fetching a message from the backend
+            const message = "You wake up in a mysterious room. What do you do?";
+            document.getElementById("chat").innerText = message;
+        });
+
+        function handleChoice(choice) {
+
+            chosenScenarios.push[document.getElementById("chat").innerText]
+            fetch('http://localhost:3000/api/scenario',
+            {
+  method: "POST",
+  body: { chosenScenarios: chosenScenarios, playerChoice: choice }
+  // ...
+})
+                .then((res) => {
+                    return res.text()
+                }).then((data) => {
+                    document.getElementById("chat").innerText =
+                        (res.target.message);
+                    document.getElementById("option1").innerText =
+                        (res.target.option1);
+                    document.getElementById("option2").innerText =
+                        (res.target.option2);
+                })
+                .catch((err) => console.debug(err));
+
+
+            // var xhr = new XMLHttpRequest();
+            // xhr.onload = (res) => {
+            //     if (res.target.status == 200) {
+            //         document.getElementById("chat").innerText =
+            //             (res.target.message);
+            //         document.getElementById("option1").innerText =
+            //             (res.target.option1);
+            //         document.getElementById("option2").innerText =
+            //             (res.target.option2);
+
+            //     }
+            // }
+            // xhr.open("GET", "localhost:3000/api/scenario", { chosenScenarios: chosenScenarios, playerChoice: choice });
+            // xhr.send();
+        }
+    </script>
+</body>
+
+</html>
