@@ -20,18 +20,29 @@
         .chat-container {
             background-color: #1e1e1e;
             border-radius: 10px;
-            width: 400px;
+            width: 800px;
+            margin: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-container-history {
+            background-color: #525156;
+            border-radius: 10px;
+            width: 800px;
+            margin: 20px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .message {
             margin-bottom: 20px;
+            text-align: center;
         }
 
         .choices {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
         }
 
         .choice-button {
@@ -40,6 +51,7 @@
             border: none;
             border-radius: 5px;
             padding: 10px 20px;
+            margin: 20px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -98,7 +110,7 @@
             chosenScenarios.push(document.getElementById("chat").innerText);
             var newDiv = document.createElement('div');
             newDiv.id = count;
-            newDiv.className = 'chat-container';
+            newDiv.className = 'chat-container-history';
             newDiv.textContent = document.getElementById("chat").innerText
             toAdd.appendChild(newDiv);
             document.getElementById('history').appendChild(toAdd);
@@ -109,7 +121,7 @@
                 {
                     headers: myHeaders,
                     method: "POST",
-                    body: JSON.stringify({ chosenScenarios: chosenScenarios, playerChoice: choice == 'option1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText   })
+                    body: JSON.stringify({ chosenScenarios: chosenScenarios, playerChoice: choice == 'option1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText })
                 })
                 .then((res) => {
                     return res.json()
