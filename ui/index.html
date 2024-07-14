@@ -33,7 +33,7 @@
             margin: 20px;
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-             white-space:pre-wrap;
+            white-space: pre-wrap;
         }
 
         .message {
@@ -64,6 +64,9 @@
         .container {
             flex-direction: column;
         }
+        .row-container {
+            flex-direction: row;
+        }
 
         .history {
             margin-bottom: 20px;
@@ -73,19 +76,25 @@
 </head>
 
 <body>
-    <div class="container">
-        <div id="history" class="history">
+    <div class='row-container'>
+        <div class="container">
+            <div id="history" class="history">
+
+            </div>
+            <div class="chat-container">
+
+                <div id="chat" class="message">
+                    <!-- Message from the backend will be displayed here -->
+                </div>
+                <div class="choices">
+                    <button class="choice-button" id="option1" onclick="handleChoice('Choice 1')">Look around</button>
+                    <button class="choice-button" id="option2" onclick="handleChoice('Choice 2')">Open the door</button>
+                </div>
+            </div>
 
         </div>
-        <div class="chat-container">
+        <div id='image'>
 
-            <div id="chat" class="message">
-                <!-- Message from the backend will be displayed here -->
-            </div>
-            <div class="choices">
-                <button class="choice-button" id="option1" onclick="handleChoice('Choice 1')">Look around</button>
-                <button class="choice-button" id="option2" onclick="handleChoice('Choice 2')">Open the door</button>
-            </div>
         </div>
     </div>
 
@@ -100,6 +109,7 @@
 
         function handleChoice(choice) {
             var toAdd = document.createDocumentFragment();
+            var toAddImg = document.createDocumentFragment();
             const pickedOption = choice == 'Choice 1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText
             count++;
             if (count == 6) {
@@ -129,11 +139,20 @@
                     return res.json()
                 }).then((data) => {
                     document.getElementById("chat").innerText =
-                        (data.message);
+                        (data.nextScenario.message);
                     document.getElementById("option1").innerText =
-                        (data.option1);
+                        (data.nextScenario.option1);
                     document.getElementById("option2").innerText =
-                        (data.option2);
+                        (data.nextScenario.option2);
+                    if (document.contains(document.getElementById('img'))) {
+                        document.getElementById('img').remove();
+                    }
+                    var newImg = document.createElement('img');
+                    newImg.id = 'img';
+                    newImg.className = 'generated-image';
+                    newImg.src = data.img
+                    toAddImg.appendChild(newImg);
+                    document.getElementById('image').appendChild(toAddImg);
                 })
                 .catch((err) => console.debug(err));
         }
