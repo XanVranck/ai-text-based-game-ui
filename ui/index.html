@@ -76,7 +76,6 @@
         <div id="history" class="history">
 
         </div>
-
         <div class="chat-container">
 
             <div id="chat" class="message">
@@ -108,10 +107,11 @@
                 document.getElementById(count).remove();
             }
             chosenScenarios.push(document.getElementById("chat").innerText);
+            // create div
             var newDiv = document.createElement('div');
-            newDiv.id = count;
+            newDiv.id = 'div' + count;
             newDiv.className = 'chat-container-history';
-            newDiv.textContent = document.getElementById("chat").innerText
+            newDiv.textContent = document.getElementById("chat").innerText ;
             toAdd.appendChild(newDiv);
             document.getElementById('history').appendChild(toAdd);
 
@@ -121,7 +121,7 @@
                 {
                     headers: myHeaders,
                     method: "POST",
-                    body: JSON.stringify({ chosenScenarios: chosenScenarios, playerChoice: choice == 'option1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText })
+                    body: JSON.stringify({ chosenScenarios: chosenScenarios, playerChoice: choice == 'Choice 1' ? document.getElementById('option1').innerText : document.getElementById('option2').innerText })
                 })
                 .then((res) => {
                     return res.json()
